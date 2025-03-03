@@ -1,4 +1,4 @@
-# Install script for directory: D:/TUDelft_practice/Q3/Photogrammetry/A1_Calibration/A1_Calibration_Code/3rd_party/glfw/src
+# Install script for directory: D:/TUDelft_practice/Q3/Photogrammetry/GEO1016_lab1_CameraCalibration/A1_Calibration/A1_Calibration_Code/3rd_party/glfw/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

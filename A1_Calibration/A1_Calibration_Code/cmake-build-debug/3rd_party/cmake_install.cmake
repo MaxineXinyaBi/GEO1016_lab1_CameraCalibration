@@ -1,4 +1,4 @@
-# Install script for directory: D:/TUDelft_practice/Q3/Photogrammetry/A1_Calibration/A1_Calibration_Code/3rd_party
+# Install script for directory: D:/TUDelft_practice/Q3/Photogrammetry/GEO1016_lab1_CameraCalibration/A1_Calibration/A1_Calibration_Code/3rd_party
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -39,9 +39,9 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("D:/TUDelft_practice/Q3/Photogrammetry/A1_Calibration/A1_Calibration_Code/cmake-build-debug/3rd_party/glew/cmake_install.cmake")
-  include("D:/TUDelft_practice/Q3/Photogrammetry/A1_Calibration/A1_Calibration_Code/cmake-build-debug/3rd_party/glfw/cmake_install.cmake")
-  include("D:/TUDelft_practice/Q3/Photogrammetry/A1_Calibration/A1_Calibration_Code/cmake-build-debug/3rd_party/glog/cmake_install.cmake")
+  include("D:/TUDelft_practice/Q3/Photogrammetry/GEO1016_lab1_CameraCalibration/A1_Calibration/A1_Calibration_Code/cmake-build-debug/3rd_party/glew/cmake_install.cmake")
+  include("D:/TUDelft_practice/Q3/Photogrammetry/GEO1016_lab1_CameraCalibration/A1_Calibration/A1_Calibration_Code/cmake-build-debug/3rd_party/glfw/cmake_install.cmake")
+  include("D:/TUDelft_practice/Q3/Photogrammetry/GEO1016_lab1_CameraCalibration/A1_Calibration/A1_Calibration_Code/cmake-build-debug/3rd_party/glog/cmake_install.cmake")
 
 endif()
 

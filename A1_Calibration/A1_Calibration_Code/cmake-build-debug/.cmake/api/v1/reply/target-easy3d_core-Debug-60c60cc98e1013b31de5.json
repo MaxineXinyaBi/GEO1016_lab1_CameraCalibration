@@ -57,19 +57,19 @@
 			[
 				{
 					"backtrace" : 3,
-					"path" : "D:/TUDelft_practice/Q3/Photogrammetry/A1_Calibration/A1_Calibration_Code"
+					"path" : "D:/TUDelft_practice/Q3/Photogrammetry/GEO1016_lab1_CameraCalibration/A1_Calibration/A1_Calibration_Code"
 				},
 				{
 					"backtrace" : 3,
-					"path" : "D:/TUDelft_practice/Q3/Photogrammetry/A1_Calibration/A1_Calibration_Code/cmake-build-debug"
+					"path" : "D:/TUDelft_practice/Q3/Photogrammetry/GEO1016_lab1_CameraCalibration/A1_Calibration/A1_Calibration_Code/cmake-build-debug"
 				},
 				{
 					"backtrace" : 3,
-					"path" : "D:/TUDelft_practice/Q3/Photogrammetry/A1_Calibration/A1_Calibration_Code/3rd_party"
+					"path" : "D:/TUDelft_practice/Q3/Photogrammetry/GEO1016_lab1_CameraCalibration/A1_Calibration/A1_Calibration_Code/3rd_party"
 				},
 				{
 					"backtrace" : 2,
-					"path" : "D:/TUDelft_practice/Q3/Photogrammetry/A1_Calibration/A1_Calibration_Code/3rd_party/glog/.."
+					"path" : "D:/TUDelft_practice/Q3/Photogrammetry/GEO1016_lab1_CameraCalibration/A1_Calibration/A1_Calibration_Code/3rd_party/glog/.."
 				}
 			],
 			"language" : "CXX",

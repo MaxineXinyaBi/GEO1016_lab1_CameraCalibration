@@ -33,7 +33,7 @@ rule C_COMPILER__3rd_glew_unscanned_Debug
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER__3rd_glew_Debug
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && "C:\Clion\CLion 2024.2.1\bin\cmake\win\x64\bin\cmake.exe" -E rm -f $TARGET_FILE && C:\Clion\CLION2~1.1\bin\mingw\bin\ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\Clion\CLION2~1.1\bin\mingw\bin\ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && "C:\Clion\CLion 2024.2.1\bin\cmake\win\x64\bin\cmake.exe" -E rm -f $TARGET_FILE && C:\Clion\CLION2~1.1\bin\mingw\bin\ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\Clion\CLION2~1.1\bin\mingw\bin\ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -52,7 +52,7 @@ rule C_COMPILER__3rd_glfw_unscanned_Debug
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER__3rd_glfw_Debug
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && "C:\Clion\CLion 2024.2.1\bin\cmake\win\x64\bin\cmake.exe" -E rm -f $TARGET_FILE && C:\Clion\CLION2~1.1\bin\mingw\bin\ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\Clion\CLION2~1.1\bin\mingw\bin\ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && "C:\Clion\CLion 2024.2.1\bin\cmake\win\x64\bin\cmake.exe" -E rm -f $TARGET_FILE && C:\Clion\CLION2~1.1\bin\mingw\bin\ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\Clion\CLION2~1.1\bin\mingw\bin\ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -71,7 +71,7 @@ rule CXX_COMPILER__3rd_glog_unscanned_Debug
 # Rule for linking CXX static library.
 
 rule CXX_STATIC_LIBRARY_LINKER__3rd_glog_Debug
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && "C:\Clion\CLion 2024.2.1\bin\cmake\win\x64\bin\cmake.exe" -E rm -f $TARGET_FILE && C:\Clion\CLION2~1.1\bin\mingw\bin\ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\Clion\CLION2~1.1\bin\mingw\bin\ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && "C:\Clion\CLion 2024.2.1\bin\cmake\win\x64\bin\cmake.exe" -E rm -f $TARGET_FILE && C:\Clion\CLION2~1.1\bin\mingw\bin\ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\Clion\CLION2~1.1\bin\mingw\bin\ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking CXX static library $TARGET_FILE
   restat = $RESTAT
 
@@ -90,7 +90,7 @@ rule CXX_COMPILER__easy3d_core_unscanned_Debug
 # Rule for linking CXX static library.
 
 rule CXX_STATIC_LIBRARY_LINKER__easy3d_core_Debug
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && "C:\Clion\CLion 2024.2.1\bin\cmake\win\x64\bin\cmake.exe" -E rm -f $TARGET_FILE && C:\Clion\CLION2~1.1\bin\mingw\bin\ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\Clion\CLION2~1.1\bin\mingw\bin\ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && "C:\Clion\CLion 2024.2.1\bin\cmake\win\x64\bin\cmake.exe" -E rm -f $TARGET_FILE && C:\Clion\CLION2~1.1\bin\mingw\bin\ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\Clion\CLION2~1.1\bin\mingw\bin\ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking CXX static library $TARGET_FILE
   restat = $RESTAT
 
@@ -109,7 +109,7 @@ rule CXX_COMPILER__easy3d_fileio_unscanned_Debug
 # Rule for linking CXX static library.
 
 rule CXX_STATIC_LIBRARY_LINKER__easy3d_fileio_Debug
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && "C:\Clion\CLion 2024.2.1\bin\cmake\win\x64\bin\cmake.exe" -E rm -f $TARGET_FILE && C:\Clion\CLION2~1.1\bin\mingw\bin\ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\Clion\CLION2~1.1\bin\mingw\bin\ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && "C:\Clion\CLion 2024.2.1\bin\cmake\win\x64\bin\cmake.exe" -E rm -f $TARGET_FILE && C:\Clion\CLION2~1.1\bin\mingw\bin\ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\Clion\CLION2~1.1\bin\mingw\bin\ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking CXX static library $TARGET_FILE
   restat = $RESTAT
 
@@ -128,7 +128,7 @@ rule CXX_COMPILER__easy3d_util_unscanned_Debug
 # Rule for linking CXX static library.
 
 rule CXX_STATIC_LIBRARY_LINKER__easy3d_util_Debug
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && "C:\Clion\CLion 2024.2.1\bin\cmake\win\x64\bin\cmake.exe" -E rm -f $TARGET_FILE && C:\Clion\CLION2~1.1\bin\mingw\bin\ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\Clion\CLION2~1.1\bin\mingw\bin\ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && "C:\Clion\CLion 2024.2.1\bin\cmake\win\x64\bin\cmake.exe" -E rm -f $TARGET_FILE && C:\Clion\CLION2~1.1\bin\mingw\bin\ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\Clion\CLION2~1.1\bin\mingw\bin\ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking CXX static library $TARGET_FILE
   restat = $RESTAT
 
@@ -147,7 +147,7 @@ rule CXX_COMPILER__easy3d_viewer_unscanned_Debug
 # Rule for linking CXX static library.
 
 rule CXX_STATIC_LIBRARY_LINKER__easy3d_viewer_Debug
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && "C:\Clion\CLion 2024.2.1\bin\cmake\win\x64\bin\cmake.exe" -E rm -f $TARGET_FILE && C:\Clion\CLION2~1.1\bin\mingw\bin\ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\Clion\CLION2~1.1\bin\mingw\bin\ranlib.exe $TARGET_FILE && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && "C:\Clion\CLion 2024.2.1\bin\cmake\win\x64\bin\cmake.exe" -E rm -f $TARGET_FILE && C:\Clion\CLION2~1.1\bin\mingw\bin\ar.exe qc $TARGET_FILE $LINK_FLAGS $in && C:\Clion\CLION2~1.1\bin\mingw\bin\ranlib.exe $TARGET_FILE && $POST_BUILD"
   description = Linking CXX static library $TARGET_FILE
   restat = $RESTAT
 
@@ -166,7 +166,7 @@ rule CXX_COMPILER__Calibration_unscanned_Debug
 # Rule for linking CXX executable.
 
 rule CXX_EXECUTABLE_LINKER__Calibration_Debug
-  command = C:\Windows\system32\cmd.exe /C "$PRE_LINK && C:\Clion\CLION2~1.1\bin\mingw\bin\G__~1.EXE $FLAGS $LINK_FLAGS $in -o $TARGET_FILE -Wl,--out-implib,$TARGET_IMPLIB -Wl,--major-image-version,0,--minor-image-version,0 $LINK_PATH $LINK_LIBRARIES && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Clion\CLION2~1.1\bin\mingw\bin\G__~1.EXE $FLAGS $LINK_FLAGS $in -o $TARGET_FILE -Wl,--out-implib,$TARGET_IMPLIB -Wl,--major-image-version,0,--minor-image-version,0 $LINK_PATH $LINK_LIBRARIES && $POST_BUILD"
   description = Linking CXX executable $TARGET_FILE
   restat = $RESTAT
 
@@ -175,7 +175,7 @@ rule CXX_EXECUTABLE_LINKER__Calibration_Debug
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
-  command = "C:\Clion\CLion 2024.2.1\bin\cmake\win\x64\bin\cmake.exe" --regenerate-during-build -SD:\TUDelft_practice\Q3\Photogrammetry\A1_Calibration\A1_Calibration_Code -BD:\TUDelft_practice\Q3\Photogrammetry\A1_Calibration\A1_Calibration_Code\cmake-build-debug
+  command = "C:\Clion\CLion 2024.2.1\bin\cmake\win\x64\bin\cmake.exe" --regenerate-during-build -SD:\TUDelft_practice\Q3\Photogrammetry\GEO1016_lab1_CameraCalibration\A1_Calibration\A1_Calibration_Code -BD:\TUDelft_practice\Q3\Photogrammetry\GEO1016_lab1_CameraCalibration\A1_Calibration\A1_Calibration_Code\cmake-build-debug
   description = Re-running CMake...
   generator = 1
 

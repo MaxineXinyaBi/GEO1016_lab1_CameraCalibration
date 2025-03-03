@@ -1,4 +1,4 @@
-# Install script for directory: D:/TUDelft_practice/Q3/Photogrammetry/A1_Calibration/A1_Calibration_Code/easy3d/fileio
+# Install script for directory: D:/TUDelft_practice/Q3/Photogrammetry/GEO1016_lab1_CameraCalibration/A1_Calibration/A1_Calibration_Code/easy3d/fileio
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
