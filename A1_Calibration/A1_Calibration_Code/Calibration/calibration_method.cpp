@@ -307,6 +307,49 @@ bool Calibration::calibration(
 
         
     // TODO: extract extrinsic parameters from M.
+    // 将 M 向量构造为 3x4 投影矩阵
+    Matrix34 P_mat;
+    P_mat.set_row(0, { M[0],  M[1],  M[2],  M[3] });
+    P_mat.set_row(1, { M[4],  M[5],  M[6],  M[7] });
+    P_mat.set_row(2, { M[8],  M[9],  M[10], M[11] });
+
+    // 从 P_mat 中提取左边的 3x3 部分 A（即 K * R 的乘积）
+    Matrix33 A;
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            A(i, j) = P_mat(i, j);
+        }
+    }
+
+    // 同时提取投影矩阵的第 4 列 m4，用于计算平移向量 t
+    Vector3D m4(P_mat(0, 3), P_mat(1, 3), P_mat(2, 3));
+
+    // 对 A 进行 RQ 分解，得到内参矩阵 K_temp 和旋转矩阵 R_temp
+    Matrix33 K_temp, R_temp;
+    rq_decompose(A, K_temp, R_temp);  // 注意：需自行实现或调用相应的 RQ 分解函数
+
+    // 确保 K_temp 的对角线元素为正（如果有负数则做相应的符号调整）
+    for (int i = 0; i < 3; i++) {
+        if (K_temp(i, i) < 0) {
+            // 对 K_temp 的第 i 列乘以 -1
+            for (int j = 0; j < 3; j++) {
+                K_temp(j, i) *= -1;
+            }
+            // 同时调整 R_temp 的第 i 行
+            for (int j = 0; j < 3; j++) {
+                R_temp(i, j) *= -1;
+            }
+        }
+    }
+
+    // 利用 K_temp 求逆，计算平移向量 t： t = K⁻¹ * m4
+    Matrix33 K_inv;
+    inverse(K_temp, K_inv);  // 请确保 inverse() 函数能够计算 3x3 矩阵的逆
+    Vector3D t_temp = K_inv * m4;
+
+    // 将计算得到的外参赋值到输出变量中
+    R = R_temp;
+    t = t_temp;
 
     // TODO: make sure the recovered parameters are passed to the corresponding variables (fx, fy, cx, cy, s, R, and t)
 
