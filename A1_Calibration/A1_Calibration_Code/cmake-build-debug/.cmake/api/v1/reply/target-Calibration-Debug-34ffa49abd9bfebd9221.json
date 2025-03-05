@@ -197,17 +197,17 @@
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "lib/libeasy3d_core.a",
+				"fragment" : "../lib/libeasy3d_core.a",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "lib/libeasy3d_viewer.a",
+				"fragment" : "../lib/libeasy3d_viewer.a",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 4,
-				"fragment" : "lib/lib3rd_glew.a",
+				"fragment" : "../lib/lib3rd_glew.a",
 				"role" : "libraries"
 			},
 			{
@@ -216,7 +216,7 @@
 			},
 			{
 				"backtrace" : 4,
-				"fragment" : "lib/lib3rd_glfw.a",
+				"fragment" : "../lib/lib3rd_glfw.a",
 				"role" : "libraries"
 			},
 			{
@@ -236,22 +236,22 @@
 			},
 			{
 				"backtrace" : 4,
-				"fragment" : "lib/libeasy3d_fileio.a",
+				"fragment" : "../lib/libeasy3d_fileio.a",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "lib/libeasy3d_core.a",
+				"fragment" : "../lib/libeasy3d_core.a",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 8,
-				"fragment" : "lib/libeasy3d_util.a",
+				"fragment" : "../lib/libeasy3d_util.a",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 10,
-				"fragment" : "lib/lib3rd_glog.a",
+				"fragment" : "../lib/lib3rd_glog.a",
 				"role" : "libraries"
 			}
 		],
