@@ -241,7 +241,8 @@ bool Calibration::calibration(
 
 
     // TODO: extract intrinsic parameters from M.
-            // 1) Rearrange the 12-dimensional vector M into a 3×4 matrix M34 (3 rows, 4 columns)
+        
+    // 1) Rearrange the 12-dimensional vector M into a 3×4 matrix M34 (3 rows, 4 columns)
     Matrix34 M34(
         M[0], M[1], M[2], M[3],
         M[4], M[5], M[6], M[7],
