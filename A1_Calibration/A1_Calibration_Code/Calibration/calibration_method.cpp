@@ -29,72 +29,72 @@
 
 using namespace easy3d;
 
-    // ---------------------- 辅助函数实现 ----------------------
-    // 求 3×3 矩阵的转置（假设没有现成的函数）
-    Matrix33 transpose(const Matrix33 &A) {
-        Matrix33 T;
-        for (int i = 0; i < 3; i++){
-            for (int j = 0; j < 3; j++){
-                T(i, j) = A(j, i);
-            }
+// ---------------------- 辅助函数实现 ----------------------
+// 求 3×3 矩阵的转置（假设没有现成的函数）
+Matrix33 transpose(const Matrix33 &A) {
+    Matrix33 T;
+    for (int i = 0; i < 3; i++){
+        for (int j = 0; j < 3; j++){
+            T(i, j) = A(j, i);
         }
-        return T;
     }
+    return T;
+}
 
-    // QR 分解（3×3 矩阵），采用 Gram-Schmidt 方法
-    void qr_decompose(const Matrix33 &A, Matrix33 &Q, Matrix33 &R) {
-        // 提取 A 的列向量
-        Vector3D a1(A(0,0), A(1,0), A(2,0));
-        Vector3D a2(A(0,1), A(1,1), A(2,1));
-        Vector3D a3(A(0,2), A(1,2), A(2,2));
+// QR 分解（3×3 矩阵），采用 Gram-Schmidt 方法
+void qr_decompose(const Matrix33 &A, Matrix33 &Q, Matrix33 &R) {
+    // 提取 A 的列向量
+    Vector3D a1(A(0,0), A(1,0), A(2,0));
+    Vector3D a2(A(0,1), A(1,1), A(2,1));
+    Vector3D a3(A(0,2), A(1,2), A(2,2));
 
-        // 计算 q1 = a1 / ||a1||
-        double r11 = a1.length();
-        Vector3D q1 = (r11 > 1e-12) ? a1 / r11 : Vector3D(0,0,0);
+    // 计算 q1 = a1 / ||a1||
+    double r11 = a1.length();
+    Vector3D q1 = (r11 > 1e-12) ? a1 / r11 : Vector3D(0,0,0);
 
-        // 对 a2 进行正交化
-        double r12 = dot(q1, a2);
-        Vector3D u2 = a2 - r12 * q1;
-        double r22 = u2.length();
-        Vector3D q2 = (r22 > 1e-12) ? u2 / r22 : Vector3D(0,0,0);
+    // 对 a2 进行正交化
+    double r12 = dot(q1, a2);
+    Vector3D u2 = a2 - r12 * q1;
+    double r22 = u2.length();
+    Vector3D q2 = (r22 > 1e-12) ? u2 / r22 : Vector3D(0,0,0);
 
-        // 对 a3 进行正交化
-        double r13 = dot(q1, a3);
-        double r23 = dot(q2, a3);
-        Vector3D u3 = a3 - r13 * q1 - r23 * q2;
-        double r33 = u3.length();
-        Vector3D q3 = (r33 > 1e-12) ? u3 / r33 : Vector3D(0,0,0);
+    // 对 a3 进行正交化
+    double r13 = dot(q1, a3);
+    double r23 = dot(q2, a3);
+    Vector3D u3 = a3 - r13 * q1 - r23 * q2;
+    double r33 = u3.length();
+    Vector3D q3 = (r33 > 1e-12) ? u3 / r33 : Vector3D(0,0,0);
 
-        // 填充 Q（以列为单位）
-        Q(0,0) = q1[0]; Q(1,0) = q1[1]; Q(2,0) = q1[2];
-        Q(0,1) = q2[0]; Q(1,1) = q2[1]; Q(2,1) = q2[2];
-        Q(0,2) = q3[0]; Q(1,2) = q3[1]; Q(2,2) = q3[2];
+    // 填充 Q（以列为单位）
+    Q(0,0) = q1[0]; Q(1,0) = q1[1]; Q(2,0) = q1[2];
+    Q(0,1) = q2[0]; Q(1,1) = q2[1]; Q(2,1) = q2[2];
+    Q(0,2) = q3[0]; Q(1,2) = q3[1]; Q(2,2) = q3[2];
 
-        // 构造 R（上三角矩阵）
-        R(0,0) = r11; R(0,1) = r12; R(0,2) = r13;
-        R(1,0) = 0;   R(1,1) = r22; R(1,2) = r23;
-        R(2,0) = 0;   R(2,1) = 0;   R(2,2) = r33;
-    }
+    // 构造 R（上三角矩阵）
+    R(0,0) = r11; R(0,1) = r12; R(0,2) = r13;
+    R(1,0) = 0;   R(1,1) = r22; R(1,2) = r23;
+    R(2,0) = 0;   R(2,1) = 0;   R(2,2) = r33;
+}
 
-    // RQ 分解：对 3×3 矩阵 A 分解得到上三角矩阵 K 和正交矩阵 R，使得 A = K * R
-    void rq_decompose(const Matrix33 &A, Matrix33 &K, Matrix33 &R) {
-        // 构造置换矩阵 P，使得 P 用于反转 A 的列顺序
-        Matrix33 P;
-        P(0,0) = 0; P(0,1) = 0; P(0,2) = 1;
-        P(1,0) = 0; P(1,1) = 1; P(1,2) = 0;
-        P(2,0) = 1; P(2,1) = 0; P(2,2) = 0;
+// RQ 分解：对 3×3 矩阵 A 分解得到上三角矩阵 K 和正交矩阵 R，使得 A = K * R
+void rq_decompose(const Matrix33 &A, Matrix33 &K, Matrix33 &R) {
+    // 构造置换矩阵 P，使得 P 用于反转 A 的列顺序
+    Matrix33 P;
+    P(0,0) = 0; P(0,1) = 0; P(0,2) = 1;
+    P(1,0) = 0; P(1,1) = 1; P(1,2) = 0;
+    P(2,0) = 1; P(2,1) = 0; P(2,2) = 0;
 
-        // 计算 A1 = A * P，相当于反转 A 的列
-        Matrix33 A1 = A * P;
+    // 计算 A1 = A * P，相当于反转 A 的列
+    Matrix33 A1 = A * P;
 
-        // 对转置后的 A1 进行 QR 分解： A1^T = Q * R_temp
-        Matrix33 Q, R_temp;
-        qr_decompose(transpose(A1), Q, R_temp);
+    // 对转置后的 A1 进行 QR 分解： A1^T = Q * R_temp
+    Matrix33 Q, R_temp;
+    qr_decompose(transpose(A1), Q, R_temp);
 
-        // 得到 RQ 分解：K = (R_temp)^T * P,  R = (Q)^T * P
-        K = transpose(R_temp) * P;
-        R = transpose(Q) * P;
-    }
+    // 得到 RQ 分解：K = (R_temp)^T * P,  R = (Q)^T * P
+    K = transpose(R_temp) * P;
+    R = transpose(Q) * P;
+}
 
 /**
  * TODO: Finish this function for calibrating a camera from the corresponding 3D-2D point pairs.
