@@ -50,7 +50,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-g -fdiagnostics-color=always"
+					"fragment" : "-g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -fcolor-diagnostics"
 				}
 			],
 			"defines" : 
@@ -64,11 +64,17 @@
 					"define" : "GLEW_STATIC"
 				}
 			],
+			"frameworks" : 
+			[
+				{
+					"path" : "/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks/OpenGL.framework"
+				}
+			],
 			"includes" : 
 			[
 				{
 					"backtrace" : 3,
-					"path" : "D:/TUDelft_practice/Q3/Photogrammetry/GEO1016_lab1_CameraCalibration/A1_Calibration/A1_Calibration_Code/3rd_party/glew/include"
+					"path" : "/Users/jacksonye/GEO1016_lab1_CameraCalibration/A1_Calibration/A1_Calibration_Code/3rd_party/glew/include"
 				}
 			],
 			"language" : "C",

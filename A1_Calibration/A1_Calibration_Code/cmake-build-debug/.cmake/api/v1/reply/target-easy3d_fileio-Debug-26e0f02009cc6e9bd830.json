@@ -63,37 +63,37 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-g -std=gnu++11 -fdiagnostics-color=always"
+					"fragment" : "-g -std=gnu++11 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -fcolor-diagnostics"
 				}
 			],
 			"defines" : 
 			[
 				{
 					"backtrace" : 3,
-					"define" : "EASY3D_RESOURCES_DIR=\"D:/TUDelft_practice/Q3/Photogrammetry/GEO1016_lab1_CameraCalibration/A1_Calibration/A1_Calibration_Code/resources\""
+					"define" : "EASY3D_RESOURCES_DIR=\"/Users/jacksonye/GEO1016_lab1_CameraCalibration/A1_Calibration/A1_Calibration_Code/resources\""
 				}
 			],
 			"includes" : 
 			[
 				{
 					"backtrace" : 4,
-					"path" : "D:/TUDelft_practice/Q3/Photogrammetry/GEO1016_lab1_CameraCalibration/A1_Calibration/A1_Calibration_Code"
+					"path" : "/Users/jacksonye/GEO1016_lab1_CameraCalibration/A1_Calibration/A1_Calibration_Code"
 				},
 				{
 					"backtrace" : 4,
-					"path" : "D:/TUDelft_practice/Q3/Photogrammetry/GEO1016_lab1_CameraCalibration/A1_Calibration/A1_Calibration_Code/cmake-build-debug"
+					"path" : "/Users/jacksonye/GEO1016_lab1_CameraCalibration/A1_Calibration/A1_Calibration_Code/cmake-build-debug"
 				},
 				{
 					"backtrace" : 5,
-					"path" : "D:/TUDelft_practice/Q3/Photogrammetry/GEO1016_lab1_CameraCalibration/A1_Calibration/A1_Calibration_Code/3rd_party/LAStools/LASzip/src"
+					"path" : "/Users/jacksonye/GEO1016_lab1_CameraCalibration/A1_Calibration/A1_Calibration_Code/3rd_party/LAStools/LASzip/src"
 				},
 				{
 					"backtrace" : 5,
-					"path" : "D:/TUDelft_practice/Q3/Photogrammetry/GEO1016_lab1_CameraCalibration/A1_Calibration/A1_Calibration_Code/3rd_party/LAStools/LASlib/inc"
+					"path" : "/Users/jacksonye/GEO1016_lab1_CameraCalibration/A1_Calibration/A1_Calibration_Code/3rd_party/LAStools/LASlib/inc"
 				},
 				{
 					"backtrace" : 2,
-					"path" : "D:/TUDelft_practice/Q3/Photogrammetry/GEO1016_lab1_CameraCalibration/A1_Calibration/A1_Calibration_Code/3rd_party/glog/.."
+					"path" : "/Users/jacksonye/GEO1016_lab1_CameraCalibration/A1_Calibration/A1_Calibration_Code/3rd_party/glog/.."
 				}
 			],
 			"language" : "CXX",

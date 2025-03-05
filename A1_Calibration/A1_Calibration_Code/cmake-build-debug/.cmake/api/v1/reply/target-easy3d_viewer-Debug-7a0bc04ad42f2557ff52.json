@@ -57,7 +57,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-g -std=gnu++11 -fdiagnostics-color=always"
+					"fragment" : "-g -std=gnu++11 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -fcolor-diagnostics"
 				}
 			],
 			"defines" : 
@@ -75,23 +75,23 @@
 			[
 				{
 					"backtrace" : 4,
-					"path" : "D:/TUDelft_practice/Q3/Photogrammetry/GEO1016_lab1_CameraCalibration/A1_Calibration/A1_Calibration_Code"
+					"path" : "/Users/jacksonye/GEO1016_lab1_CameraCalibration/A1_Calibration/A1_Calibration_Code"
 				},
 				{
 					"backtrace" : 4,
-					"path" : "D:/TUDelft_practice/Q3/Photogrammetry/GEO1016_lab1_CameraCalibration/A1_Calibration/A1_Calibration_Code/cmake-build-debug"
+					"path" : "/Users/jacksonye/GEO1016_lab1_CameraCalibration/A1_Calibration/A1_Calibration_Code/cmake-build-debug"
 				},
 				{
 					"backtrace" : 2,
-					"path" : "D:/TUDelft_practice/Q3/Photogrammetry/GEO1016_lab1_CameraCalibration/A1_Calibration/A1_Calibration_Code/3rd_party/glew/include"
+					"path" : "/Users/jacksonye/GEO1016_lab1_CameraCalibration/A1_Calibration/A1_Calibration_Code/3rd_party/glew/include"
 				},
 				{
 					"backtrace" : 2,
-					"path" : "D:/TUDelft_practice/Q3/Photogrammetry/GEO1016_lab1_CameraCalibration/A1_Calibration/A1_Calibration_Code/3rd_party/glfw/include"
+					"path" : "/Users/jacksonye/GEO1016_lab1_CameraCalibration/A1_Calibration/A1_Calibration_Code/3rd_party/glfw/include"
 				},
 				{
 					"backtrace" : 2,
-					"path" : "D:/TUDelft_practice/Q3/Photogrammetry/GEO1016_lab1_CameraCalibration/A1_Calibration/A1_Calibration_Code/3rd_party/glog/.."
+					"path" : "/Users/jacksonye/GEO1016_lab1_CameraCalibration/A1_Calibration/A1_Calibration_Code/3rd_party/glog/.."
 				}
 			],
 			"language" : "CXX",
@@ -144,15 +144,15 @@
 		},
 		{
 			"backtrace" : 2,
+			"id" : "3rd_glfw::@82eb073f23ca4a565ec2"
+		},
+		{
+			"backtrace" : 2,
 			"id" : "3rd_glog::@d3cd30be08f891a1b326"
 		},
 		{
 			"backtrace" : 2,
 			"id" : "easy3d_core::@cb35a92cddfea1372b37"
-		},
-		{
-			"backtrace" : 2,
-			"id" : "3rd_glfw::@82eb073f23ca4a565ec2"
 		},
 		{
 			"backtrace" : 2,
