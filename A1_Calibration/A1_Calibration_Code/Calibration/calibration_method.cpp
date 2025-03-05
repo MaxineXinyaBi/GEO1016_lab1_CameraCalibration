@@ -29,7 +29,72 @@
 
 using namespace easy3d;
 
+    // ---------------------- 辅助函数实现 ----------------------
+    // 求 3×3 矩阵的转置（假设没有现成的函数）
+    Matrix33 transpose(const Matrix33 &A) {
+        Matrix33 T;
+        for (int i = 0; i < 3; i++){
+            for (int j = 0; j < 3; j++){
+                T(i, j) = A(j, i);
+            }
+        }
+        return T;
+    }
 
+    // QR 分解（3×3 矩阵），采用 Gram-Schmidt 方法
+    void qr_decompose(const Matrix33 &A, Matrix33 &Q, Matrix33 &R) {
+        // 提取 A 的列向量
+        Vector3D a1(A(0,0), A(1,0), A(2,0));
+        Vector3D a2(A(0,1), A(1,1), A(2,1));
+        Vector3D a3(A(0,2), A(1,2), A(2,2));
+
+        // 计算 q1 = a1 / ||a1||
+        double r11 = a1.length();
+        Vector3D q1 = (r11 > 1e-12) ? a1 / r11 : Vector3D(0,0,0);
+
+        // 对 a2 进行正交化
+        double r12 = dot(q1, a2);
+        Vector3D u2 = a2 - r12 * q1;
+        double r22 = u2.length();
+        Vector3D q2 = (r22 > 1e-12) ? u2 / r22 : Vector3D(0,0,0);
+
+        // 对 a3 进行正交化
+        double r13 = dot(q1, a3);
+        double r23 = dot(q2, a3);
+        Vector3D u3 = a3 - r13 * q1 - r23 * q2;
+        double r33 = u3.length();
+        Vector3D q3 = (r33 > 1e-12) ? u3 / r33 : Vector3D(0,0,0);
+
+        // 填充 Q（以列为单位）
+        Q(0,0) = q1[0]; Q(1,0) = q1[1]; Q(2,0) = q1[2];
+        Q(0,1) = q2[0]; Q(1,1) = q2[1]; Q(2,1) = q2[2];
+        Q(0,2) = q3[0]; Q(1,2) = q3[1]; Q(2,2) = q3[2];
+
+        // 构造 R（上三角矩阵）
+        R(0,0) = r11; R(0,1) = r12; R(0,2) = r13;
+        R(1,0) = 0;   R(1,1) = r22; R(1,2) = r23;
+        R(2,0) = 0;   R(2,1) = 0;   R(2,2) = r33;
+    }
+
+    // RQ 分解：对 3×3 矩阵 A 分解得到上三角矩阵 K 和正交矩阵 R，使得 A = K * R
+    void rq_decompose(const Matrix33 &A, Matrix33 &K, Matrix33 &R) {
+        // 构造置换矩阵 P，使得 P 用于反转 A 的列顺序
+        Matrix33 P;
+        P(0,0) = 0; P(0,1) = 0; P(0,2) = 1;
+        P(1,0) = 0; P(1,1) = 1; P(1,2) = 0;
+        P(2,0) = 1; P(2,1) = 0; P(2,2) = 0;
+
+        // 计算 A1 = A * P，相当于反转 A 的列
+        Matrix33 A1 = A * P;
+
+        // 对转置后的 A1 进行 QR 分解： A1^T = Q * R_temp
+        Matrix33 Q, R_temp;
+        qr_decompose(transpose(A1), Q, R_temp);
+
+        // 得到 RQ 分解：K = (R_temp)^T * P,  R = (Q)^T * P
+        K = transpose(R_temp) * P;
+        R = transpose(Q) * P;
+    }
 
 /**
  * TODO: Finish this function for calibrating a camera from the corresponding 3D-2D point pairs.
@@ -307,49 +372,55 @@ bool Calibration::calibration(
 
         
     // TODO: extract extrinsic parameters from M.
-    // 将 M 向量构造为 3x4 投影矩阵
-    Matrix34 P_mat;
-    P_mat.set_row(0, { M[0],  M[1],  M[2],  M[3] });
-    P_mat.set_row(1, { M[4],  M[5],  M[6],  M[7] });
-    P_mat.set_row(2, { M[8],  M[9],  M[10], M[11] });
 
-    // 从 P_mat 中提取左边的 3x3 部分 A（即 K * R 的乘积）
-    Matrix33 A;
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
-            A(i, j) = P_mat(i, j);
-        }
-    }
+    // ---------------------- 提取外参代码 ----------------------
 
-    // 同时提取投影矩阵的第 4 列 m4，用于计算平移向量 t
-    Vector3D m4(P_mat(0, 3), P_mat(1, 3), P_mat(2, 3));
+    // 假设 M 是一个 12 元素的向量，按行排列构成一个 3×4 的投影矩阵
+    // 提取外参：旋转矩阵 R 和平移向量 t
+    {
+        // 1. 将 M 重新组织为 3×4 投影矩阵 P_mat
+        Matrix34 P_mat;
+        P_mat.set_row(0, { M[0],  M[1],  M[2],  M[3] });
+        P_mat.set_row(1, { M[4],  M[5],  M[6],  M[7] });
+        P_mat.set_row(2, { M[8],  M[9],  M[10], M[11] });
 
-    // 对 A 进行 RQ 分解，得到内参矩阵 K_temp 和旋转矩阵 R_temp
-    Matrix33 K_temp, R_temp;
-    rq_decompose(A, K_temp, R_temp);  // 注意：需自行实现或调用相应的 RQ 分解函数
-
-    // 确保 K_temp 的对角线元素为正（如果有负数则做相应的符号调整）
-    for (int i = 0; i < 3; i++) {
-        if (K_temp(i, i) < 0) {
-            // 对 K_temp 的第 i 列乘以 -1
+        // 2. 提取左边的 3×3 子矩阵 A_extr（满足 A_extr = K * R）
+        Matrix33 A_extr;
+        for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                K_temp(j, i) *= -1;
-            }
-            // 同时调整 R_temp 的第 i 行
-            for (int j = 0; j < 3; j++) {
-                R_temp(i, j) *= -1;
+                A_extr(i, j) = P_mat(i, j);
             }
         }
+
+        // 3. 提取投影矩阵的第 4 列 m4，用于计算平移向量 t
+        Vector3D m4(P_mat(0, 3), P_mat(1, 3), P_mat(2, 3));
+
+        // 4. 对 A_extr 进行 RQ 分解，得到临时内参矩阵 K_temp 和旋转矩阵 R_temp
+        Matrix33 K_temp, R_temp;
+        rq_decompose(A_extr, K_temp, R_temp);
+
+        // 5. 调整 K_temp 的符号：确保 K_temp 对角线上的元素均为正
+        for (int i = 0; i < 3; i++) {
+            if (K_temp(i, i) < 0) {
+                for (int j = 0; j < 3; j++) {
+                    K_temp(j, i) *= -1;
+                }
+                for (int j = 0; j < 3; j++) {
+                    R_temp(i, j) *= -1;
+                }
+            }
+        }
+
+        // 6. 利用内参矩阵 K_temp 求逆，计算平移向量 t： t = K_temp⁻¹ * m4
+        Matrix33 K_inv;
+        inverse(K_temp, K_inv);  // 请确保你已有 3×3 矩阵求逆的实现
+        Vector3D t_temp = K_inv * m4;
+
+        // 7. 将计算得到的外参赋值给输出变量：旋转矩阵 R 和平移向量 t
+        R = R_temp;
+        t = t_temp;
     }
 
-    // 利用 K_temp 求逆，计算平移向量 t： t = K⁻¹ * m4
-    Matrix33 K_inv;
-    inverse(K_temp, K_inv);  // 请确保 inverse() 函数能够计算 3x3 矩阵的逆
-    Vector3D t_temp = K_inv * m4;
-
-    // 将计算得到的外参赋值到输出变量中
-    R = R_temp;
-    t = t_temp;
 
     // TODO: make sure the recovered parameters are passed to the corresponding variables (fx, fy, cx, cy, s, R, and t)
 
@@ -358,20 +429,4 @@ bool Calibration::calibration(
                  "\t\tif your calibration is successful or not.\n\n" << std::flush;
     return false;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
