@@ -241,7 +241,70 @@ bool Calibration::calibration(
 
 
     // TODO: extract intrinsic parameters from M.
+            // 1) Rearrange the 12-dimensional vector M into a 3×4 matrix M34 (3 rows, 4 columns)
+    Matrix34 M34(
+        M[0], M[1], M[2], M[3],
+        M[4], M[5], M[6], M[7],
+        M[8], M[9], M[10], M[11]
+    );
 
+    // 2) Split: A = first 3×3 of M34, b = last column
+    Matrix33 A(
+        M34(0, 0), M34(0, 1), M34(0, 2),
+        M34(1, 0), M34(1, 1), M34(1, 2),
+        M34(2, 0), M34(2, 1), M34(2, 2)
+    );
+    Vector3D b(M34(0, 3), M34(1, 3), M34(2, 3));
+
+    // 3) Define some auxiliary vectors: a1, a2, a3 are the 3 rows of A respectively
+    Vector3D a1(A(0, 0), A(0, 1), A(0, 2));
+    Vector3D a2(A(1, 0), A(1, 1), A(1, 2));
+    Vector3D a3(A(2, 0), A(2, 1), A(2, 2));
+
+    // 4) Calculate ρ = 1 / ||a3||
+    double norm_a3 = a3.length();
+    if (norm_a3 < 1e-12) {
+        std::cerr << "[Error] norm(a3) too small.\n";
+        return false; // Unable to calibrate
+    }
+    double rho = 1.0 / norm_a3;
+    double rho2 = rho * rho; 
+
+    // 5) Calculate cx, cy
+    //    cx = ρ^2 * (a1 · a3),  cy = ρ^2 * (a2 · a3)
+    double a1dot_a3 = dot(a1, a3);
+    double a2dot_a3 = dot(a2, a3);
+    cx = rho2 * a1dot_a3;
+    cy = rho2 * a2dot_a3;
+
+    // 6) Calculate cosθ、sinθ
+    Vector cross_a1_a3 = cross(a1, a3);
+    Vector cross_a2_a3 = cross(a2, a3);
+    double norm_a1_a3 = cross_a1_a3.length();
+    double norm_a2_a3 = cross_a2_a3.length();
+
+    if (norm_a1_a3 < 1e-12 || norm_a2_a3 < 1e-12) {
+        std::cerr << "[Error] cross() degenerate.\n";
+        return false;
+    }
+    double cos_theta = -dot(cross_a1_a3, cross_a2_a3) / (norm_a1_a3 * norm_a2_a3);
+
+    double sin_theta = std::sqrt(std::max(0.0, 1.0 - cos_theta * cos_theta));
+
+    // 7) Calculate fx, fy:   fx = ρ² * ||a1×a3|| * sinθ;   fy = ρ² * ||a2×a3|| * sinθ
+    fx = rho2 * norm_a1_a3 * sin_theta;
+    fy = rho2 * norm_a2_a3 * sin_theta;
+
+    // 8) Calculate skew s
+    //   s = - fx * cotθ = - fx * (cosθ / sinθ)
+    if (std::abs(sin_theta) < 1e-12) {
+        s = 0.0; // when theta->0,skew->0
+    }
+    else {
+        s = -fx * (cos_theta / sin_theta);
+    }
+
+        
     // TODO: extract extrinsic parameters from M.
 
     // TODO: make sure the recovered parameters are passed to the corresponding variables (fx, fy, cx, cy, s, R, and t)
