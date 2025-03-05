@@ -243,7 +243,6 @@ bool Calibration::calibration(
     // TODO: extract intrinsic parameters from M.
 
     // TODO: extract extrinsic parameters from M.
-    // TODO: extract extrinsic parameters from M.
     // 将 M 向量构造为 3x4 投影矩阵
     Matrix34 P_mat;
     P_mat.set_row(0, { M[0],  M[1],  M[2],  M[3] });
