@@ -351,8 +351,24 @@ bool Calibration::calibration(
     // 6. Calculate t = ρ * K_inv * b
     Vector3D t_extr = rho * K_inv * b;
 
+	// 7. Compute determinant of R_extr, flip entire R and t if det(R) < 0
+    double detR =
+        R_extr(0, 0) * (R_extr(1, 1) * R_extr(2, 2) - R_extr(1, 2) * R_extr(2, 1))
+        - R_extr(0, 1) * (R_extr(1, 0) * R_extr(2, 2) - R_extr(1, 2) * R_extr(2, 0))
+        + R_extr(0, 2) * (R_extr(1, 0) * R_extr(2, 1) - R_extr(1, 1) * R_extr(2, 0));
+
+    if (detR < 0) {
+        for (int rr = 0; rr < 3; rr++) {
+            R_extr(rr, 0) = -R_extr(rr, 0);
+            R_extr(rr, 1) = -R_extr(rr, 1);
+            R_extr(rr, 2) = -R_extr(rr, 2);
+        }
+        t_extr = -t_extr;
+    }
+
     R = R_extr;
     t = t_extr;
+    
     
 
     // TODO: make sure the recovered parameters are passed to the corresponding variables (fx, fy, cx, cy, s, R, and t)
