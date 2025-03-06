@@ -209,20 +209,14 @@ bool Calibration::calibration(
         R_extr(1, j) = r2[j];
         R_extr(2, j) = r3[j];
     }
-    Matrix33 K_extr;
-    K_extr(0, 0) = fx;   K_extr(0, 1) = s;    K_extr(0, 2) = cx;
-    K_extr(1, 0) = 0;    K_extr(1, 1) = fy;   K_extr(1, 2) = cy;
-    K_extr(2, 0) = 0;    K_extr(2, 1) = 0;    K_extr(2, 2) = 1;
+    Matrix33 K_extr(fx, s, cx,
+        0, fy, cy,
+        0, 0, 1);
+
     Matrix33 K_inv;
-    K_inv(0, 0) = 1.0 / fx;
-    K_inv(0, 1) = -s / (fx * fy);
-    K_inv(0, 2) = (s * cy - cx * fy) / (fx * fy);
-    K_inv(1, 0) = 0;
-    K_inv(1, 1) = 1.0 / fy;
-    K_inv(1, 2) = -cy / fy;
-    K_inv(2, 0) = 0;
-    K_inv(2, 1) = 0;
-    K_inv(2, 2) = 1;
+    inverse(K_extr, K_inv);
+
+
     Vector3D t_extr = rho * (K_inv * b);
     double detR = R_extr(0, 0) * (R_extr(1, 1) * R_extr(2, 2) - R_extr(1, 2) * R_extr(2, 1))
                 - R_extr(0, 1) * (R_extr(1, 0) * R_extr(2, 2) - R_extr(1, 2) * R_extr(2, 0))
