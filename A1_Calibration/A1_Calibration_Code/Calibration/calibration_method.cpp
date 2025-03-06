@@ -307,11 +307,6 @@ bool Calibration::calibration(
         
     // TODO: extract extrinsic parameters from M.
     {
-        // 1. 已知：A 已经是 M 的左 3×3 部分，
-        //    其三行分别为 a1, a2, a3；b 为 M 的第四列（已在前面构造）。
-        //    这里 a1, a2, a3 和 b 均为 Vector3D 类型。
-
-        // 2. 计算尺度因子 ρ = 1 / ||a3||
         double norm_a3 = a3.length();
         if (norm_a3 < 1e-12) {
             std::cerr << "[Error] norm(a3) too small.\n";
@@ -319,10 +314,8 @@ bool Calibration::calibration(
         }
         double rho = 1.0 / norm_a3;
 
-        // 3. 计算 r₃ = ρ * a3
         Vector3D r3 = a3 * rho;
-
-        // 4. 计算 r₁ = (a₂ × a₃) / ||a₂ × a₃||
+        
         Vector3D r1 = cross(a2, a3);
         double norm_r1 = r1.length();
         if (norm_r1 < 1e-12) {
@@ -331,10 +324,8 @@ bool Calibration::calibration(
         }
         r1 = r1 / norm_r1;
 
-        // 5. 计算 r₂ = r₃ × r₁
         Vector3D r2 = cross(r3, r1);
 
-        // 6. 组装旋转矩阵 R，将 r₁, r₂, r₃ 作为 R 的行（即 R = [r₁ᵀ; r₂ᵀ; r₃ᵀ]）
         Matrix33 R_extr;
         for (int j = 0; j < 3; j++) {
             R_extr(0, j) = r1[j];
@@ -342,13 +333,11 @@ bool Calibration::calibration(
             R_extr(2, j) = r3[j];
         }
 
-        // 7. 计算内参矩阵 K 和 K 的逆（利用之前已提取的 fx, fy, cx, cy, s）
         Matrix33 K_extr;
         K_extr(0, 0) = fx;  K_extr(0, 1) = s;   K_extr(0, 2) = cx;
         K_extr(1, 0) = 0;   K_extr(1, 1) = fy;  K_extr(1, 2) = cy;
         K_extr(2, 0) = 0;   K_extr(2, 1) = 0;   K_extr(2, 2) = 1;
 
-        // 由于 K 为上三角矩阵，其逆可以直接写出：
         Matrix33 K_inv;
         K_inv(0, 0) = 1.0 / fx;
         K_inv(0, 1) = -s / (fx * fy);
@@ -360,11 +349,9 @@ bool Calibration::calibration(
         K_inv(2, 1) = 0;
         K_inv(2, 2) = 1;
 
-        // 8. 计算平移向量 t = ρ * K_inv * b
         Vector3D t_extr = K_inv * b;
         t_extr = t_extr * rho;
 
-        // 9. 将计算得到的外参赋值给输出变量
         R = R_extr;
         t = t_extr;
     }
@@ -375,6 +362,6 @@ bool Calibration::calibration(
     std::cout << "\n\tTODO: After you implement this function, please return 'true' - this will trigger the viewer to\n"
                  "\t\tupdate the rendering using your recovered camera parameters. This can help you to visually check\n"
                  "\t\tif your calibration is successful or not.\n\n" << std::flush;
-    return false;
+    return true;
 }
 
