@@ -304,57 +304,55 @@ bool Calibration::calibration(
         s = -fx * (cos_theta / sin_theta);
     }
 
-        
     // TODO: extract extrinsic parameters from M.
-    {
-        double norm_a3 = a3.length();
-        if (norm_a3 < 1e-12) {
-            std::cerr << "[Error] norm(a3) too small.\n";
-            return false;
-        }
-        double rho = 1.0 / norm_a3;
-
-        Vector3D r3 = a3 * rho;
-
-        Vector3D r1 = cross(a2, a3);
-        double norm_r1 = r1.length();
-        if (norm_r1 < 1e-12) {
-            std::cerr << "[Error] r1 degenerate.\n";
-            return false;
-        }
-        r1 = r1 / norm_r1;
-
-        Vector3D r2 = cross(r3, r1);
-
-        Matrix33 R_extr;
-        for (int j = 0; j < 3; j++) {
-            R_extr(0, j) = r1[j];
-            R_extr(1, j) = r2[j];
-            R_extr(2, j) = r3[j];
-        }
-
-        Matrix33 K_extr;
-        K_extr(0, 0) = fx;  K_extr(0, 1) = s;   K_extr(0, 2) = cx;
-        K_extr(1, 0) = 0;   K_extr(1, 1) = fy;  K_extr(1, 2) = cy;
-        K_extr(2, 0) = 0;   K_extr(2, 1) = 0;   K_extr(2, 2) = 1;
-
-        Matrix33 K_inv;
-        K_inv(0, 0) = 1.0 / fx;
-        K_inv(0, 1) = -s / (fx * fy);
-        K_inv(0, 2) = (s * cy - cx * fy) / (fx * fy);
-        K_inv(1, 0) = 0;
-        K_inv(1, 1) = 1.0 / fy;
-        K_inv(1, 2) = -cy / fy;
-        K_inv(2, 0) = 0;
-        K_inv(2, 1) = 0;
-        K_inv(2, 2) = 1;
-
-        Vector3D t_extr = K_inv * b;
-        t_extr = t_extr * rho;
-
-        R = R_extr;
-        t = t_extr;
+    
+    if (norm_a3 < 1e-12) {
+        std::cerr << "[Error] norm(a3) too small.\n";
+        return false;
     }
+    Vector3D r3 = a3 * rho;
+    Vector3D r1 = cross(a2, a3);
+    double norm_r1 = r1.length();
+    if (norm_r1 < 1e-12) {
+        std::cerr << "[Error] r1 degenerate.\n";
+        return false;
+    }
+    r1 = r1 / norm_r1;
+    Vector3D r2 = cross(r3, r1);
+    Matrix33 R_extr;
+    for (int j = 0; j < 3; j++) {
+        R_extr(0, j) = r1[j];
+        R_extr(1, j) = r2[j];
+        R_extr(2, j) = r3[j];
+    }
+    Matrix33 K_extr;
+    K_extr(0, 0) = fx;   K_extr(0, 1) = s;    K_extr(0, 2) = cx;
+    K_extr(1, 0) = 0;    K_extr(1, 1) = fy;   K_extr(1, 2) = cy;
+    K_extr(2, 0) = 0;    K_extr(2, 1) = 0;    K_extr(2, 2) = 1;
+    Matrix33 K_inv;
+    K_inv(0, 0) = 1.0 / fx;
+    K_inv(0, 1) = -s / (fx * fy);
+    K_inv(0, 2) = (s * cy - cx * fy) / (fx * fy);
+    K_inv(1, 0) = 0;
+    K_inv(1, 1) = 1.0 / fy;
+    K_inv(1, 2) = -cy / fy;
+    K_inv(2, 0) = 0;
+    K_inv(2, 1) = 0;
+    K_inv(2, 2) = 1;
+    Vector3D t_extr = rho * (K_inv * b);
+    double detR = R_extr(0, 0) * (R_extr(1, 1) * R_extr(2, 2) - R_extr(1, 2) * R_extr(2, 1))
+                - R_extr(0, 1) * (R_extr(1, 0) * R_extr(2, 2) - R_extr(1, 2) * R_extr(2, 0))
+                + R_extr(0, 2) * (R_extr(1, 0) * R_extr(2, 1) - R_extr(1, 1) * R_extr(2, 0));
+    if (detR < 0) {
+        for (int rr = 0; rr < 3; rr++) {
+            R_extr(rr, 0) = -R_extr(rr, 0);
+            R_extr(rr, 1) = -R_extr(rr, 1);
+            R_extr(rr, 2) = -R_extr(rr, 2);
+        }
+        t_extr = -t_extr;
+    }
+    R = R_extr;
+    t = t_extr;
 
 
 
